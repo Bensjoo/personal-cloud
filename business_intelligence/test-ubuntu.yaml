@@ -1,0 +1,10 @@
+# ubuntu pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-test
+spec:
+  containers:
+  - name: ubuntu-test
+    image: ubuntu
+    command: ["/bin/bash", "-c", "sleep 7200"]
