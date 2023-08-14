@@ -24,3 +24,5 @@ I want to try out a timeseries database. As of writing, I have not yet sorted ou
 
 Project Repository:
 https://github.com/Bensjoo/pi-cluster-monitor
+
+## Grafana setup
