@@ -60,6 +60,6 @@ spec:
   type: LoadBalancer
   ports:
   - name: http
-    port: 3000
+    port: 80
     targetPort: http
-  loadBalancerIP: 192.168.1.52
+  loadBalancerIP: 192.168.1.55

@@ -1,0 +1,6 @@
+persistence:
+  enabled: true
+  size: 5Gi
+service:
+  type: LoadBalancer
+  loadBalancerIP: 1.1.1.1 # put some value
