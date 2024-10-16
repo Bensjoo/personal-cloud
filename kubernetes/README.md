@@ -67,6 +67,8 @@ kubectl apply -f metworking/metallb-cr.yaml
 
 
 ## persistent storage on cluster
+
+### block storage using longhorn
 quite easy to set up. there are no special considerations in my case since i have one disk per cluster right now.
 
 use ansible or run on each node to get requirement
@@ -84,4 +86,14 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 ```
 
 
-add 
+#### Using a subset of workers for longhorn?
+cluster is too small at the moment but many people seem to only allocate a few nodes to longhorn.
+using taints/tolerations to route more stateful pods to those nodes? available from all nodes still?
+
+#### Backup
+can back up to S3 or NFS
+
+### object storage solutions?
+to be explored
+- minio
+- ceph
