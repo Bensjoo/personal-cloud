@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: cloudflare
+  labels:
+    app: cloudflared
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflared
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args:
+            [
+              "tunnel",
+              "--no-autoupdate",
+              "run",
+              "--token",
+              "$(CLOUDFLARE_TOKEN)",
+            ]
+          env:
+            - name: CLOUDFLARE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tunnel-secret
+                  key: CLOUDFLARE_TOKEN
+          resources:
+            limits:
+              cpu: 100m
+              memory: 1G
+          ports:
+            - containerPort: 80
