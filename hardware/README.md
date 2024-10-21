@@ -56,6 +56,22 @@ IOZone                    4k random write           40527 KB/s
 
                           Score: 8164
 ```
+
+#### Crucial x9 1tb
+```
+     Category                  Test                      Result
+HDParm                    Disk Read                 287.71 MB/sec
+HDParm                    Cached Disk Read          277.64 MB/sec
+DD                        Disk Write                175 MB/s
+FIO                       4k random read            21026 IOPS (84106 KB/s)
+FIO                       4k random write           17052 IOPS (68209 KB/s)
+IOZone                    4k read                   13570 KB/s
+IOZone                    4k write                  34082 KB/s
+IOZone                    4k random read            23985 KB/s
+IOZone                    4k random write           32140 KB/s
+
+                          Score: 8988
+```
 ## Kubernetes cluster Overview
 *Full setup description to be written*
 
