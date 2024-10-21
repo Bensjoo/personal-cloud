@@ -23,9 +23,11 @@ sudo locale-gen en_US.UTF-8
 add the following to end of `/boot/firmware/cmdline.txt`: `cgroup_enable=memory cgroup_memory=1`
 TODO: needed still for current linux versions?
 
-## updates
+## installs & updates
 ```bash
 sudo apt update
+
+sudo apt install open-iscsi
 sudo apt upgrade -y
 ```
 

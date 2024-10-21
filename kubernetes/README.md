@@ -36,6 +36,12 @@ https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-mul
 I use k9s to manage my deployment
 ![k9s view of cluster](../images/k9s.png)
 
+### Add no scheduling to master/control plane node
+probably best not to load the master node up too hard even though its a small cluster.
+
+```
+kubectl taint node art node-role.kubernetes-io/master:NoSchedule
+```
 ### run a test pod to see
 
 ## Networking setup
@@ -88,7 +94,7 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 
 #### Using a subset of workers for longhorn?
 cluster is too small at the moment but many people seem to only allocate a few nodes to longhorn.
-using taints/tolerations to route more stateful pods to those nodes? available from all nodes still?
+using taints/tolerations to route more stateful pods to those nodes? available from all nodes still? simply disabling scheduling of longhorn to some nodes seems to be one wa
 
 #### Backup
 can back up to S3 or NFS
