@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nc-data-pvc
+  namespace: noco
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nocodb
+  namespace: noco
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nocodb
+  template:
+    metadata:
+      labels:
+        app: nocodb
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: nocodb
+          image: nocodb/nocodb:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: nocodb-secret
+          volumeMounts:
+            - mountPath: /usr/app/data
+              name: nc-data
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+      volumes:
+        - name: nc-data
+          persistentVolumeClaim:
+            claimName: nc-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nocodb
+  namespace: noco
+spec:
+  selector:
+    app: nocodb
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
