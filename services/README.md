@@ -4,6 +4,15 @@
 ## Database - postgres
 I would much rather have an external NAS to handle more reliable & persistent storage. but seeing as I spent my allowance, I'll run postgres on the k8s cluster for now, leveraging longhorn for a volume
 
+## Object storage - minio
+It seems many of the OSS tools I want to deploy uses s3 like interfaces for storage. like the postgres usecase - I'd prefer to run this off of a stable NAS, but lets instead go for a modest on-cluster deployment with a single longhorn volume
+### Accessing locally
+Since minio GUI seems to be using websockets, that makes it harder to use kubectl port-forward. luckily we can use kubectl proxy to estaplish a proxy on localhost
+
+visiting the gui will then be:
+
+`http://localhost:8001/api/v1/namespaces/minio/services/minio:9001/proxy/browser`
+
 ## Exalidraw - mindmapping & notes service
 excalidraw is cool for writing diagrams! I want to run this on my cluster
 
