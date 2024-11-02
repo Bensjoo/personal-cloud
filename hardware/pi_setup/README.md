@@ -27,8 +27,8 @@ TODO: needed still for current linux versions?
 ```bash
 sudo apt update
 
-sudo apt install open-iscsi
 sudo apt upgrade -y
+sudo apt install open-iscsi -y
 ```
 
 ## LEDs
