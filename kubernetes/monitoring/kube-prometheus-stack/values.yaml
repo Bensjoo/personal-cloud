@@ -1,0 +1,58 @@
+# values.yaml
+prometheus:
+  prometheusSpec:
+    retention: 7d
+
+    scrapeInterval: 2m
+    scrapeConfigs:
+      - job_name: "kubernetes-nodes"
+        scrape_interval: 2m
+      - job_name: "kubernetes-pods"
+        scrape_interval: 5m
+
+    resources:
+      requests:
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+# Node Exporter specific config
+prometheus-node-exporter:
+  extraArgs:
+    - --collector.textfile.directory=/host/textfile_collector
+  extraVolumeMounts:
+    - name: textfile-collector
+      mountPath: /host/textfile_collector
+  extraVolumes:
+    - name: textfile-collector
+      hostPath:
+        path: /var/lib/node_exporter/textfile_collector
+  configMap:
+    temperature-script:
+      temperature.sh: |
+        #!/bin/bash
+        echo "# HELP pi_cpu_temperature Current temperature of the CPU"
+        echo "# TYPE pi_cpu_temperature gauge"
+        echo "pi_cpu_temperature $(vcgencmd measure_temp | sed -n "s/temp=\([0-9.]*\).*/\1/p")"
+
+grafana:
+  resources:
+    requests:
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  persistence:
+    enabled: true
+    storageClassName: longhorn
+    size: 512Mi # Grafana mainly stores dashboards and users
+
+alertmanager:
+  enabled: false
