@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appflowy-gotrue
+spec:
+  selector:
+    matchLabels:
+      app: appflowy-gotrue
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: appflowy-gotrue
+    spec:
+      containers:
+        - name: gotrue
+          image: appflowyinc/gotrue:latest # From their docker-compose
+          ports:
+            - containerPort: 9999
+              name: http
+          env:
+            - name: GOTRUE_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: gotrue-config
+                  key: jwt-secret
+            - name: GOTRUE_JWT_EXP
+              value: "3600" # 1 hour token expiry
+            - name: GOTRUE_DB_DRIVER
+              value: "postgres"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: gotrue-config
+                  key: database-url
+            - name: PORT
+              value: "9999"
+            - name: GOTRUE_SITE_URL
+              value: "appflowy-flutter://" # For app deep linking
+            - name: API_EXTERNAL_URL
+              value: "http://localhost:8000" # Or your actual external URL
+            - name: GOTRUE_MAILER_AUTOCONFIRM
+              value: "true" # Skip email verification
+            - name: URI_ALLOW_LIST
+              value: "*"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
