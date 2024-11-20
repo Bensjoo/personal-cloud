@@ -44,9 +44,12 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
           resources:
+            requests:
+              cpu: "100m"
+              memory: "250Mi"
             limits:
               cpu: "500m"
-              memory: "1Gi"
+              memory: "500Mi"
       volumes:
         - name: nc-data
           persistentVolumeClaim:
