@@ -31,18 +31,15 @@ prometheus-node-exporter:
   extraVolumeMounts:
     - name: textfile-collector
       mountPath: /host/textfile_collector
+    - name: temperature-script
+      mountPath: /scripts
   extraVolumes:
     - name: textfile-collector
       hostPath:
         path: /var/lib/node_exporter/textfile_collector
-  configMap:
-    temperature-script:
-      temperature.sh: |
-        #!/bin/bash
-        echo "# HELP pi_cpu_temperature Current temperature of the CPU"
-        echo "# TYPE pi_cpu_temperature gauge"
-        echo "pi_cpu_temperature $(vcgencmd measure_temp | sed -n "s/temp=\([0-9.]*\).*/\1/p")"
-
+    - name: temperature-script
+      configMap:
+        name: node-exporter-textfile-collector
 grafana:
   resources:
     requests:
