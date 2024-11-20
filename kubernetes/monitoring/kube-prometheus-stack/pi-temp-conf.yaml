@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-exporter-textfile-collector
+  namespace: monitoring
+data:
+  temperature.sh: |
+    #!/bin/bash
+    # Read from thermal zone instead of vcgencmd
+    TEMP=$(cat /sys/class/thermal/thermal_zone0/temp)
+    TEMP_C=$(echo "scale=2; $TEMP/1000" | bc)
+    echo "# HELP pi_cpu_temperature Current temperature of the CPU"
+    echo "# TYPE pi_cpu_temperature gauge"
+    echo "pi_cpu_temperature $TEMP_C"
