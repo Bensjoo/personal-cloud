@@ -1,1 +1,1 @@
-networking/metallb-cr.yaml
+kubernetes/networking/metallb/metallb-config.yaml
