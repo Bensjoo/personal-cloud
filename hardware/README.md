@@ -2,7 +2,14 @@
 # Hardware Setup
 My current inventory is as follows:
 
-### Kubernetes cluster components
+### Kubernetes cluster components: X86 cluster
+- All nodes: GMKTec N100 miniPC - 4 cores
+  - Crucial SO-DIMM memory 32GB - 1 stick
+  - NVME: Crucial p3 4TB
+- power: included supply
+- networking: 8 port switch -- limited to gbit speed right now, but pc supports up to 2.5gbit
+
+### Kubernetes cluster components: ARM cluster
 - All nodes: Raspberry Pi 4 Model B - 8GB RAM
 - Master SSD:
   - Crucial *X8 SSD 500GB*
@@ -77,3 +84,18 @@ IOZone                    4k random write           32140 KB/s
 
 I've been playing around with running kubernetes on Pi for a long time, and was successful in setting up clusters already before Pi 4 came out. The fundamental problem was that I could never do the data projects that I wanted with the cluster due to limitations in available docker containers in ARM architecture, and also some limitations in the hardware (IOps mainly).
 
+### Speeds using intel setup
+```
+     Category                  Test                      Result
+HDParm                    Disk Read                 1311.95 MB/sec
+HDParm                    Cached Disk Read          1238.32 MB/sec
+DD                        Disk Write                710 MB/s
+FIO                       4k random read            182857 IOPS (731428 KB/s)
+FIO                       4k random write           62629 IOPS (250519 KB/s)
+IOZone                    4k read                   161636 KB/s
+IOZone                    4k write                  142973 KB/s
+IOZone                    4k random read            48324 KB/s
+IOZone                    4k random write           166338 KB/s
+
+                          Score: 42460
+```

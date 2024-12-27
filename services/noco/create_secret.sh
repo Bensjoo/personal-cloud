@@ -10,6 +10,5 @@ echo "NocoDB user:" $NOCODB_USER
 # Create a Kubernetes Secret
 kubectl create secret generic nocodb-secret \
   --namespace=$NAMESPACE \
-  --from-literal=NC_DB="pg://postgres.postgres.svc.cluster.local:5432?u=$NOCODB_USER&p=$NOCODB_PASSWORD&d=$POSTGRES_DB" \
-  # --from-literal=NC_DB="pg://$NOCODB_USER:$NOCODB_PASSWORD@postgres.postgres.svc.cluster.local:5432/$POSTGRES_DB" \
+  --from-literal=NC_DB="pg://kramer-psql:5432?u=$NOCODB_USER&p=$NOCODB_PASSWORD&d=$POSTGRES_DB" \
   --dry-run=client -o yaml | kubectl apply -f -

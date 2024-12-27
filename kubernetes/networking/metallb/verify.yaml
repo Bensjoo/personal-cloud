@@ -17,9 +17,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: quay.io/clcollins/kube-verify:01
-          ports:
-            - containerPort: 8080
+          image: nginx
 ---
 apiVersion: v1
 kind: Service
@@ -32,5 +30,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80
   type: LoadBalancer
+  loadBalancerIP: xxx.xxx.x.xx
