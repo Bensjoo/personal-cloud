@@ -1,1 +1,2 @@
 kubernetes/networking/metallb/metallb-config.yaml
+kubernetes/networking/cloudflare/tunnel-confmap.yaml
