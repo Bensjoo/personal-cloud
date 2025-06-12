@@ -7,7 +7,7 @@ What I'm looking to accomplish with my infrastructure
 - My own personal data analytics infrastructure
 - Try out OSS software in a low-stakes, fixed-cost environment
 - Practical for hosting small dumb web app ideas that I tend to concieve
-****
+
 
 ## Architecture Overview
 Vandelay Industries is made up by:
