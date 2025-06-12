@@ -1,53 +1,29 @@
 # My Personal Cloud
-Referred to, as [*Vandelay Industries*](https://www.youtube.com/watch?v=Ugx06TlVyw4]), my personal cloud is based around a kubernetes cluster running on Raspberry Pi microcomputers mixed with using some public cloud components and other SaaS products.
+Referred to, as [*Vandelay Industries*](https://www.youtube.com/watch?v=Ugx06TlVyw4]), my personal home lab cloud is based around a Kubernetes cluster running on two sets of computers, with using some public cloud components and other SaaS products.
 
+## Goals / Motivation
 What I'm looking to accomplish with my infrastructure
 - Having fun tinkering!
-- Personal data analytics infrastructure
+- My own personal data analytics infrastructure
 - Try out OSS software in a low-stakes, fixed-cost environment
 - Practical for hosting small dumb web app ideas that I tend to concieve
+****
 
-Image belows show some of the hardware used to power a kubernetes cluster consisting of three nodes (1 orchestrator, 2x workers)
+## Architecture Overview
+Vandelay Industries is made up by:
+- Router / gateway / firewall
+- L2 Switch for fast networking between Nodes
+- Kubernetes cluster 
+  - 3 workers running on x86 with high memory & high disk space
+  - to be added: work group of PIs that were peviously a standalone cluster -> low-powered low-storage energy efficent nodes
+- Cloudflare zero-trust to manage access to hosted apps
+
+A crude network-level diagram looks as follows:
+<p align="center">
+<img src="images/architecture_network.png" width="1024"/>
+</p>
+
+Images below show some of the hardware used to power the K8s cluster, the raspberry pi compute part
 <p align="center">
     <img src="images/hardware.jpg" width="480"/>
 </p>
-
-## Requirements
-### compute infrastructure
-#### data engineering & analytics
-- BI
-- scheduling
-- ETL
-#### web applications & APIs
-- self-made apps
-  - golang
-  - python
-  - htmx
-  - react
-#### CI CD
-- github runners?
-#### FaaS
-- run functions based on event queues?
-### storage capabilities
-#### databases
-#### file storage
-#### s3-like object storage
-
-### Monitoring
-
-### Maintainability
-being able to re-install the cluster with somewhat ease
-
-
-
-
-## Architecture Overview
-Right now Vandelay Industries contains:
-- Kubernetes cluster
-- single-machine VM
-- Cloudflare zero-trust to manage access to hosted apps
-
-<p align="center">
-<img src="images/cluster-2023-08-02.png" width="1024"/>
-</p>
-
