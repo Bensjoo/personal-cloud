@@ -124,6 +124,9 @@ cat /var/lib/rancher/k3s/server/node-token
 ```bash
 export K3S_URL=https://art.vandelay:6443
 export K3S_TOKEN=<OUTPUT FROM PREVIOUS>
+
+# now can connect
+curl -sfL https://get.k3s.io | sh -
 ```
 
 ### Add cluster to context
@@ -139,5 +142,24 @@ https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-mul
 I use k9s to manage my deployment
 ![k9s view of cluster](../images/k9s.png)
 
+### Networking / load balancer / ingress
+out of the box, the cluster should now leverage Traefik to give us a type of loadbalancer across the nodes. and since I have set up unifi to give the nodes local addresses `art.vandelay, elaine.vandelay, ...`, I should be able to do subdomains with an ingress?
+
+Lets try to deploy a simple nginx pod, with an ingress, to see whether things are working.
+
+- nginx pod
+- service
+- ingress
+
+```bash
+kubectl apply -f cloud_setup/networking_test/deployment.yaml
+# optional: check by port-forwarding the ClusterIP service
+
+# apply ingress
+kubectl apply -f cloud_setup/networking_test/ingress.yaml
+```
+
+#### Add A record to router DNS options
+in this case, I added *.vandelay as an A-record and then that seems to solve thingss
 
 ## Maintenance / updates
