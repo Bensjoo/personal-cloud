@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-test-ingress
+  namespace: cluster-test
+spec:
+  ingressClassName: traefik # This ensures Traefik handles it
+  rules:
+    - host: nginx-test.vandelay # Replace with your desired hostname
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-test-service
+                port:
+                  number: 80
