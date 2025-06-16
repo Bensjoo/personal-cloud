@@ -180,5 +180,10 @@ I want to be able to run stateful services (e.g. databases, object storage, ...)
 kubectl taint nodes art node-role.kubernetes.io/control-plane:NoSchedule
 ```
 
-
+node labels for worker nodes
+```bash
+kubectl label node george node-type=big
+kubectl label node elaine node-type=big
+kubectl label node jerry node-type=big
+```
 ## Maintenance / updates
