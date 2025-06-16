@@ -142,9 +142,18 @@ https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-mul
 I use k9s to manage my deployment
 ![k9s view of cluster](../images/k9s.png)
 
-### Networking / load balancer / ingress
-out of the box, the cluster should now leverage Traefik to give us a type of loadbalancer across the nodes. and since I have set up unifi to give the nodes local addresses `art.vandelay, elaine.vandelay, ...`, I should be able to do subdomains with an ingress?
+### Networking / Load balancer / Ingress
+Out of the box, the cluster should now leverage Traefik to give us a type of loadbalancer capabilities. 
 
+I was previously using Metal-LB to create services with exposed external IP addresses in the VLAN IP network. 
+
+With the out-of-box setup however, I should be able to do subdomains with an ingress
+
+
+#### Add A record to router DNS options
+in this case, I added `*.vandelay` as an A-record and pointed it to one of the nodes (`art` in this case)
+
+#### Test using sample Nginx deployment
 Lets try to deploy a simple nginx pod, with an ingress, to see whether things are working.
 
 - nginx pod
@@ -159,7 +168,17 @@ kubectl apply -f cloud_setup/networking_test/deployment.yaml
 kubectl apply -f cloud_setup/networking_test/ingress.yaml
 ```
 
-#### Add A record to router DNS options
-in this case, I added *.vandelay as an A-record and then that seems to solve thingss
+Once the ingress has kicked in properly, should be able to resolve at `https://nginx-test.vandelay`
+
+### Persistence & statefulness
+I want to be able to run stateful services (e.g. databases, object storage, ...) without services being tied to a specific pod.
+
+[Longhorn](https://longhorn.io) has solved this problem for me.
+
+#### label intel worker nodes / control plane
+```bash
+kubectl taint nodes art node-role.kubernetes.io/control-plane:NoSchedule
+```
+
 
 ## Maintenance / updates
