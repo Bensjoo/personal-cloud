@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: longhorn-test-pvc
+  namespace: cluster-test
+spec:
+  accessModes:
+    - ReadWriteOnce # Still ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 100Mi

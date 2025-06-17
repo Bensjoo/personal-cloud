@@ -186,4 +186,48 @@ kubectl label node george node-type=big
 kubectl label node elaine node-type=big
 kubectl label node jerry node-type=big
 ```
+
+### Install longhorn chart
+using helm to install longhorn. not really doing any special considerations yet beyond the tainting of control plane node.
+
+```bash
+bash cloud_setup/persistence/upgrade-longhorn.sh
+```
+by port-forwarding to the `longhorn-frontend` service we should reach the GUI and can check things
+
+
+### Setup Ingress with  middleware on the GUI endpoint
+Traefik has a concept of Middleware and different options. I wanted to at least have some layer of protection even though the endpoint is only available in my local VLAN.
+
+```bash
+# create secret (uses 1password CLI)
+bash cloud_setup/persistence/create-secret.sh
+
+# apply middleware + ingress
+kubectl apply -f cloud_setup/persistence/longhorn-ingress.yaml
+```
+
+### Verify the persistence setup
+small experiment:
+- create PVC
+- pod test-writer runs a busybox to create a test file with small content, on specific node, `george`
+- pod test-reader runs busybox, reads test file content, runs on other node `elaine`
+
+```bash
+kubectl apply -f cloud_setup/persistence/verification-test-pvc.yaml
+
+kubectl apply -f cloud_setup/persistence/verification-test-write.yaml
+
+# check logs / attatch to pod once up and running, if happy, delete pod
+kubectl delete -f cloud_setup/persistence/verification-test-write.yaml
+
+# create reader and check
+kubectl apply -f cloud_setup/persistence/verification-test-read.yaml
+
+# check logs / attach
+
+# TARE DOWN
+kubectl delete -f cloud_setup/persistence/verification-test-write.yaml
+kubectl delete -f cloud_setup/persistence/verification-test-pvc.yaml
+```
 ## Maintenance / updates

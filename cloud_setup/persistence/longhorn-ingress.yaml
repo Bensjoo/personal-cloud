@@ -1,10 +1,30 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: longhorn-basic-auth # Name your middleware
+  namespace: longhorn-system # Important: Must be in the same namespace as the Ingress and Secret
+spec:
+  basicAuth:
+    secret: basic-auth # Name of your secret containing the htpasswd entry
+    realm: "Authentication Required" # Message displayed in the browser's auth prompt
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: longhorn-ingress
   namespace: longhorn-system
-  # annotations:
-  # TODO: fix middleware using traefik
+  annotations:
+    # Reference the basic auth middleware for this router
+    # Format: <namespace>-<middleware-name>@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: longhorn-system-longhorn-basic-auth@kubernetescrd
+
+    # Optional: prevent the controller from redirecting (308) to HTTPS
+    # Only if you are not doing SSL termination at Traefik yet, or explicitly want HTTP
+    traefik.ingress.kubernetes.io/ssl-redirect: "false"
+
+    # Optional: custom max body size for file uploading
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure # Ensure Traefik is listening on these if you also use HTTPS
+    traefik.ingress.kubernetes.io/max-body-size: "10000m" # Moved to Traefik router specific annotation
 spec:
   ingressClassName: traefik
   rules:

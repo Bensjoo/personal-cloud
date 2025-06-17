@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pvc-writer
+  namespace: cluster-test
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: george
+  containers:
+    - name: writer
+      image: busybox:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          #!/bin/sh
+          mkdir -p /mnt/longhorn-volume
+          while true; do
+            DATE_TIME=$(date '+%Y-%m-%d %H:%M:%S')
+            MESSAGE="Hello from writer at $DATE_TIME"
+            echo "$MESSAGE" >> /mnt/longhorn-volume/test.txt
+            echo "Wrote: $MESSAGE"
+            sync
+            sleep 1200
+          done
+      volumeMounts:
+        - name: longhorn-storage
+          mountPath: /mnt/longhorn-volume
+  volumes:
+    - name: longhorn-storage
+      persistentVolumeClaim:
+        claimName: longhorn-test-pvc
