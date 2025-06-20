@@ -187,7 +187,7 @@ kubectl label node elaine node-type=big
 kubectl label node jerry node-type=big
 ```
 
-### Install longhorn chart
+#### Install longhorn chart
 using helm to install longhorn. not really doing any special considerations yet beyond the tainting of control plane node.
 
 ```bash
@@ -196,7 +196,7 @@ bash cloud_setup/persistence/upgrade-longhorn.sh
 by port-forwarding to the `longhorn-frontend` service we should reach the GUI and can check things
 
 
-### Setup Ingress with  middleware on the GUI endpoint
+#### Setup Ingress with  middleware on the GUI endpoint
 Traefik has a concept of Middleware and different options. I wanted to at least have some layer of protection even though the endpoint is only available in my local VLAN.
 
 ```bash
@@ -207,7 +207,7 @@ bash cloud_setup/persistence/create-secret.sh
 kubectl apply -f cloud_setup/persistence/longhorn-ingress.yaml
 ```
 
-### Verify the persistence setup
+#### Verify the persistence setup
 small experiment:
 - create PVC
 - pod test-writer runs a busybox to create a test file with small content, on specific node, `george`
@@ -230,4 +230,41 @@ kubectl apply -f cloud_setup/persistence/verification-test-read.yaml
 kubectl delete -f cloud_setup/persistence/verification-test-write.yaml
 kubectl delete -f cloud_setup/persistence/verification-test-pvc.yaml
 ```
+
+### Object Storage
+most apps need some type of s3-compliant s3 interface so i view it as core infra on my home cloud. Using [minio](https://min.io/docs/minio/kubernetes/upstream/operations/deploy-manage-tenants.html) to achieve this on the cluster in conjunction with longhorn storing underlying PVCs
+
+#### Installing MinIO operator
+I'm used to working with helm chart or kustomize. the [docs](https://min.io/docs/minio/kubernetes/upstream/operations/installation.html) describe deploying and controlling MinIO using their operator / CRD
+```bash
+# deploys operator to minio-operator NS
+kubectl apply -k "github.com/minio/operator?ref=v5.0.18"
+```
+#### Installing mino cluster
+used the command in docs to generate a base deployment file
+- rolling my own secret gen script using 1pw
+- changing ns to minio
+- no storage-user account yet, will click-ops
+- Had to experiment with deployment.yaml, i chose not to use the built-in TLS management, instead I'll use traefik and add cert manager in the longer term
+
+```
+# create ns
+kubectl create ns minio
+
+# create secret
+bash cloud_setup/object_storage/create_secret.sh
+
+
+# create minio deployment
+kubectl apply -f cloud_setup/object_storage/deployment.yaml
+
+kubectl apply -f cloud_setup/object_storage/ingress.yaml
+```
+
+### Cloudflare
+Will implement reverse proxy using cloudflareD similar to old setups once i feel the need to expose some services
+
+### Monitoring
+for now will wait to see what options I have and feel out what I actually need
+
 ## Maintenance / updates
