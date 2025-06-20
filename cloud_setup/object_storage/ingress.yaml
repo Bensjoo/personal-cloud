@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-gui
+  namespace: minio
+  #annotations:
+  #ingressClassName: traefik
+  # Tell Traefik to connect to backend via HTTPS, but skip certificate verification
+  # THIS IS THE KEY ANNOTATION FOR YOUR PROBLEM
+  #traefik.ingress.kubernetes.io/service.serverstransport: |
+  #  insecureSkipVerify: true # Indentation matters here for YAML parsing
+
+  # Redirect HTTP to HTTPS for external client access (optional, if you want it)
+  #traefik.ingress.kubernetes.io/entrypoints.web.http.redirections.entryPoint.to: websecure
+  #traefik.ingress.kubernetes.io/entrypoints.web.http.redirections.entryPoint.scheme: https
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: minio.vandelay
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: object-store-console
+                port:
+                  number: 9090
