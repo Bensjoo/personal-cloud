@@ -1,0 +1,2 @@
+[tools]
+postgres = "14.18" # match db version
