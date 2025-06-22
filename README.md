@@ -22,3 +22,8 @@ Images below show some of the hardware used to power the K8s cluster, the raspbe
 <p align="center">
     <img src="images/cluster_collage_v1.jpg"/>
 </p>
+
+## Repo Setup
+*TODO: add more docs/tools on k9s, k8s, helm*
+
+Repo is transitioning to using [mise-en-place](https://github.com/jdx/mise/tree/main) to set up dev/cli tools
