@@ -1,22 +1,41 @@
-## Attempted apache airflow deployment
+# Data scheduling using Apache Airflow
 
-### backend
-use postgresql in instance
+## Setup
+following the production guide around the apache airflow helm chart
+### setup namespace
+```bash
+kubectl create ns scheduler
+```
 
-### storing connections & variables
-use standard postgresql as well? encrypted values
+### Set up db including secret
+we will need a psql database, a dedicated user that can write to said db.
 
-could potentially use aws or GCP secret manager
+```bash
+# Be sure to port-forward your psql if needed
+bash services/scheduler/backend/setup_db.sh
 
-### DAGs
-sync using gitSync is probable way to go
+# set up secret
+bash services/scheduler/backend/create-db-secret.sh
+```
+
+#### pgbouncer note
+With airflow 3.0, the only microservice in the deployment that talks to db is api-server!
+
+since I wont be running my setup with multiple api-servers ill skip pgbouncer
+
+### analytics / dag repo syncs
+TBD
 
 ### 
 
-### tradeoffs to minimize usage:
-- kubernetesExecutor only?
-- smaller image possible?
-  - no aws, gcp, slack, elastic, google, snowflake, azure, hashicorp other bloat providers?
-  - slim image should be good with addition of a few providers
-  - fewer packages might make smaller image but no change in load. storage isnt really a big deal
-- hard requests/limits
+
+## Notes while setting up
+
+### stated airflow support on chart docs
+1.17 should say supports airflow 3.0+
+
+### Change password of admin user
+How to do it?
+
+### add new user
+getting errors, screenshot + log snippet in errors folder
