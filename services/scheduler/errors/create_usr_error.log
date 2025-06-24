@@ -1,0 +1,47 @@
+INFO:     10.42.0.8:49632 - "POST /auth/users/add HTTP/1.1" 302 Found
+INFO:     10.42.0.8:49632 - "GET /auth/users/list/ HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49712 - "GET /auth/static/appbuilder/css/fontawesome/fontawesome.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49802 - "GET /auth/static/appbuilder/css/fontawesome/v4-shims.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49632 - "GET /auth/static/appbuilder/css/bootstrap.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49698 - "GET /auth/static/appbuilder/js/ab_actions.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49822 - "GET /auth/static/dist/airflowDefaultTheme.48540e25fb1e474cef20.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49752 - "GET /auth/static/dist/jquery-ui.min.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49838 - "GET /auth/static/appbuilder/css/fontawesome/regular.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49726 - "GET /auth/static/dist/jquery-ui.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:51450 - "GET /auth/static/appbuilder/css/fontawesome/solid.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49754 - "GET /auth/static/appbuilder/js/bootstrap.min.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49676 - "GET /auth/static/dist/main.49c4d5787ef1f247f004.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49850 - "GET /auth/static/appbuilder/css/select2/select2.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49788 - "GET /auth/static/appbuilder/css/select2/select2-bootstrap.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49670 - "GET /auth/static/appbuilder/css/ab.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49646 - "GET /auth/static/appbuilder/css/bootstrap-datepicker/bootstrap-datepicker3.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49684 - "GET /auth/static/dist/moment.6943aa3cca9cb1129a71.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49818 - "GET /auth/static/appbuilder/css/fontawesome/brands.min.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49742 - "GET /auth/static/appbuilder/js/ab.js HTTP/1.1" 200 OK
+INFO:     10.42.1.1:53928 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:53932 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49660 - "GET /auth/static/appbuilder/js/bootstrap-datepicker/bootstrap-datepicker.min.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49662 - "GET /auth/static/dist/flash.02dea0c2ac20820e8d1b.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49694 - "GET /auth/static/dist/loadingDots.96221bc8b6345c7d65b3.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49758 - "GET /auth/static/appbuilder/js/jquery-latest.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:49780 - "GET /auth/static/appbuilder/js/select2/select2.min.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:51430 - "GET /auth/static/dist/main.49c4d5787ef1f247f004.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49630 - "GET /auth/static/appbuilder/js/ab_filters.js HTTP/1.1" 200 OK
+INFO:     10.42.0.8:51542 - "GET /auth/static/appbuilder/css/flags/flags16.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.0.8:49770 - "GET /auth/static/dist/materialIcons.4fd835641d53f81af3d3.css HTTP/1.1" 304 Not Modified
+INFO:     10.42.1.1:53070 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:53080 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:35430 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:35438 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:35174 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:35182 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:41752 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:41758 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:44174 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:44182 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:57678 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:57686 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:59350 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:59360 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:47948 - "GET /api/v2/version HTTP/1.1" 200 OK
+INFO:     10.42.1.1:47952 - "GET /api/v2/version HTTP/1.1" 200 OK
