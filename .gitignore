@@ -1,2 +1,4 @@
 kubernetes/networking/metallb/metallb-config.yaml
 kubernetes/networking/cloudflare/tunnel-confmap.yaml
+services/scheduler/chart-airflow3-rc2
+.DS_Store

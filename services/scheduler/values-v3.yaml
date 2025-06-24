@@ -1,0 +1,34 @@
+webserverSecretKeySecretName: webserver-key
+
+data:
+  metadataSecretName: metadata-db
+
+nodeSelector:
+  node-type: big
+
+useStandardNaming: true
+
+# backend
+postgresql:
+  enabled: false
+
+ingress:
+  web:
+    enabled: true
+    hosts:
+      - name: airflow-web.vandelay
+        tls:
+          enabled: false
+    ingressClassName: traefik
+    path: "/"
+    pathType: Prefix
+
+  api-server:
+    enabled: true
+    hosts:
+      - name: airflow.vandelay
+        tls:
+          enabled: false
+    ingressClassName: traefik
+    path: "/"
+    pathType: Prefix
