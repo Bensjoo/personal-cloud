@@ -30,11 +30,37 @@ since I wont be running my setup with multiple api-servers ill skip pgbouncer
 ### analytics / dag repo syncs
 TBD
 
-### 
 
 ### Set up / manage connections
+TBD, could add an external secrets backend. 
 
+For now will store them encrypted through GUI
+#### Minio connection
+setup a connection of type `aws`, add access & secret key for SA created in minio
 
+in extra fields json, also make sure to add: `{"endpoint_url": "http://minio.minio.svc.cluster.local"}`
+
+#### Verify minio bucket connection
+can shell into worker and run python inline:
+
+```python
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+from io import StringIO
+s3_hook = S3Hook(aws_conn_id='data-ingest-bucket')
+# Create file content
+content = "hello"
+
+# Upload the file using the S3Hook
+try:
+    s3_hook.load_string(
+        string_data=content,
+        key="test.txt",
+        bucket_name="data-ingest"
+    )
+    print("File 'test.txt' uploaded successfully to 'data-ingest' bucket!")
+except Exception as e:
+    print(f"Error uploading file: {e}")
+```
 ## Notes while setting up
 
 ### stated airflow support on chart docs
