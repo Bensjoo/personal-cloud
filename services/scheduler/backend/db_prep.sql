@@ -1,6 +1,0 @@
--- writer user
-CREATE USER scheduler WITH PASSWORD 'PG_PASS';
-GRANT ALL PRIVILEGES ON DATABASE scheduler TO scheduler;
-GRANT ALL ON ALL TABLES IN SCHEMA public TO scheduler;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO scheduler;
-GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO scheduler;

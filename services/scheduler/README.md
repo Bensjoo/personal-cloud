@@ -16,7 +16,11 @@ bash services/scheduler/backend/setup_db.sh
 
 # set up secret
 bash services/scheduler/backend/create-db-secret.sh
+
+# setup fernet key that encrypts the db
+bash services/scheduler/backend/create-fernet-secret.sh
 ```
+
 
 #### pgbouncer note
 With airflow 3.0, the only microservice in the deployment that talks to db is api-server!
@@ -27,6 +31,8 @@ since I wont be running my setup with multiple api-servers ill skip pgbouncer
 TBD
 
 ### 
+
+### Set up / manage connections
 
 
 ## Notes while setting up

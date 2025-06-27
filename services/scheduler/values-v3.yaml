@@ -1,5 +1,8 @@
 webserverSecretKeySecretName: webserver-key
-
+fernetKeySecretName: metadata-fernet-key
+images:
+  airflow:
+    pullPolicy: Always
 data:
   metadataSecretName: metadata-db
 
