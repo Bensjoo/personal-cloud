@@ -8,6 +8,26 @@ images:
 data:
   metadataSecretName: metadata-db
 
+dags:
+  gitSync:
+    enabled: true
+    repo: git@github.com:bensjoo/analytics.git
+
+    branch: main
+
+    subPath: ""
+    # github known hosts
+    knownHosts: |
+      github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+    sshKeySecret: gitsync
+    resources:
+      requests:
+        cpu: "50m" # Much lower than 500m default
+        memory: "64Mi"
+      limits:
+        cpu: "150m" # Allow brief spikes during sync
+        memory: "128Mi"
+
 nodeSelector:
   node-type: big
 
