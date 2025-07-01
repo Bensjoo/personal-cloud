@@ -27,6 +27,8 @@ With airflow 3.0, the only microservice in the deployment that talks to db is ap
 
 since I wont be running my setup with multiple api-servers ill skip pgbouncer
 
+### Custom image
+for purposes of supporting ETL tools like pola.rs, need custom image. for now uploading to docker hub: `bengan/airflow`
 ### analytics / dag repo syncs
 TBD
 
@@ -63,8 +65,6 @@ except Exception as e:
 ```
 ## Notes while setting up
 
-### stated airflow support on chart docs
-1.17 should say supports airflow 3.0+
 
 ### Change password of admin user
 How to do it?

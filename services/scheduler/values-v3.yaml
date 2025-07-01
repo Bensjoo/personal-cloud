@@ -3,6 +3,8 @@ fernetKeySecretName: metadata-fernet-key
 images:
   airflow:
     pullPolicy: Always
+    repository: bengan/airflow
+    tag: 3.0.2
 data:
   metadataSecretName: metadata-db
 
