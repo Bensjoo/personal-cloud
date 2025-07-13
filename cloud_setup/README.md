@@ -261,8 +261,15 @@ kubectl apply -f cloud_setup/object_storage/deployment.yaml
 kubectl apply -f cloud_setup/object_storage/ingress.yaml
 ```
 
-### Cloudflare
-Will implement reverse proxy using cloudflareD similar to old setups once i feel the need to expose some services
+### CloudflareD
+for exposing services
+```bash
+kubectl create ns cloudflare
+bash cloud_setup/networking_external/generate_secret.sh
+
+kubectl apply -f cloud_setup/networking_external/deployment.yaml
+```
+
 
 ### Monitoring
 for now will wait to see what options I have and feel out what I actually need
