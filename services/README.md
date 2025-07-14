@@ -19,7 +19,7 @@ excalidraw is cool for writing diagrams! I want to run this on my cluster
 Excalidraw seems to support running on docker locally
 https://docs.excalidraw.com/docs/introduction/development#self-hosting
 
-seems like its limited functionality & documentation
+**Excalidraw doesnt support the shared/collaboration features on self-host. will use it a bit but missing that feature so will stick to excalidraw.com in collab efforts**
 
 ## OLD STUFF
 ### TODO: Apache Airflow workflow scheduler setup
