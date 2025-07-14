@@ -1,4 +1,4 @@
-webserverSecretKeySecretName: webserver-key
+apiSecretKeySecretName: api-key
 fernetKeySecretName: metadata-fernet-key
 images:
   airflow:
