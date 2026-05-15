@@ -401,3 +401,66 @@ kubectl apply -f cloud_setup/networking_external/deployment.yaml
 for now will wait to see what options I have and feel out what I actually need
 
 ## Maintenance / updates
+
+### Node OS Maintenance (Debian/Raspberry Pi)
+To keep the underlying nodes secure, perform regular package updates.
+**Note:** Since the cluster uses a single master node (`art`), rebooting it will cause temporary API downtime. Worker node workloads will continue to run, but no new pods can be scheduled.
+
+0. **Pre-flight Health Check:**
+   ```bash
+   kubectl get nodes
+   kubectl get pods -A | grep -v Running
+   ```
+
+1. **Manual Update:**
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   # If prompted about /etc/ssh/sshd_config, choose "keep the local version currently installed"
+   sudo apt autoremove -y
+   ```
+2. **Automated Security Patches:**
+   It is recommended to install `unattended-upgrades` to ensure critical security patches are applied automatically.
+   ```bash
+   sudo apt install unattended-upgrades
+   sudo dpkg-reconfigure --priority=low unattended-upgrades
+   ```
+3. **Kernel Updates:**
+   After a kernel update, a reboot is required. Check if `/var/run/reboot-required` exists.
+
+### Cluster Update Workflow (Rolling)
+To minimize downtime and ensure Longhorn volumes migrate safely, follow this order:
+
+#### 1. Master Node (art)
+Since it's a single master, this causes temporary API downtime.
+1. Perform OS updates.
+2. Back up the database: `sudo cp -r /var/lib/rancher/k3s/server/db /tmp/k3s-db-backup-$(date +%Y%m%d)`
+3. Upgrade k3s:
+   ```bash
+   curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=stable sh -
+   ```
+4. Reboot if necessary.
+
+#### 2. Worker Nodes (One-by-one)
+Repeat these steps for `george`, `elaine`, and `jerry`:
+
+1. **Drain from your laptop/master:**
+   ```bash
+   kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data
+   ```
+2. **On the worker node:**
+   - Run OS updates: `sudo apt update && sudo apt upgrade -y`
+   - Upgrade k3s:
+   ```bash
+   curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=stable K3S_URL=https://art.vandelay:6443 K3S_TOKEN=<TOKEN> sh -
+   ```
+   - Reboot node.
+3. **Uncordon from your laptop/master:**
+   ```bash
+   kubectl uncordon <node-name>
+   ```
+
+### Certificates
+k3s automatically rotates its internal certificates. To check expiration:
+```bash
+sudo k3s check-config
+```
