@@ -459,6 +459,22 @@ Repeat these steps for `george`, `elaine`, and `jerry`:
    kubectl uncordon <node-name>
    ```
 
+### Longhorn Upgrades
+Longhorn should be updated via Helm. Since it manages your data, verify health before starting.
+
+
+1. **Health Check:** Open the Longhorn UI and ensure all volumes are `Healthy`. Do not upgrade if any volumes are `Rebuilding` or `Degraded`.
+2. **Check/change version on Update Script**
+   had to visit https://github.com/longhorn/longhorn and only possible to go minor version at a time
+   file: `cloud_setup/persistence/upgrade-longhorn.sh`
+3. **Run Upgrade Script:**
+   ```bash
+   bash cloud_setup/persistence/upgrade-longhorn.sh
+   ```
+4. **Post-Upgrade:**
+   - Monitor the `longhorn-system` namespace to ensure all pods (especially `instance-manager` and `longhorn-manager`) restart successfully.
+   - Check the UI again to ensure volumes remain attached and healthy.
+
 ### Certificates
 k3s automatically rotates its internal certificates. To check expiration:
 ```bash
