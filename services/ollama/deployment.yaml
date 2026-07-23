@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ollama
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ollama-models
+  namespace: ollama
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi # Adjust size based on how many GGUF models you want to pull
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  selector:
+    app: ollama
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 11434
+      targetPort: 11434
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:latest
+          ports:
+            - containerPort: 11434
+              name: http
+          env:
+            - name: OLLAMA_KEEP_ALIVE
+              value: "24h" # Keeps models loaded in RAM longer between requests
+          resources:
+            requests:
+              cpu: "1"
+              memory: 4Gi
+            limits:
+              cpu: "4" # Utilize available CPU cores
+              memory: 20Gi # Cap at ~20GB system RAM
+          volumeMounts:
+            - name: model-storage
+              mountPath: /root/.ollama
+      volumes:
+        - name: model-storage
+          persistentVolumeClaim:
+            claimName: ollama-models
