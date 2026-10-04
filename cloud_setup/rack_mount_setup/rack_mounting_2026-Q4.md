@@ -9,8 +9,8 @@ Moving Vandelay Industries from a desk pile into a 10" mini rack. Goals: neat, q
 ### Included in the box
 | Item | Qty | Plan |
 |---|---|---|
-| 1U rack shelf | 1 | Switch (U12) |
-| 0.5U rack shelf | 1 | Spare - Pi / cable management |
+| 1U rack shelf | 1 | N100 blade mount (U5) |
+| 0.5U rack shelf | 1 | Switch (U12) |
 | 10" 12-port blank ladder patch panel | 1 | Phase 2 (needs keystones) |
 | Fixing plate (optional fan mount) | 2 | Rear fans behind the node section |
 | 1U venting blank panel | 2 | Spare U near the nodes (air intake) |
@@ -60,12 +60,12 @@ Move day - everything goes offline anyway (network moves too), so do a planned f
 | Position | What | Mounting | Status |
 |---|---|---|---|
 | Top | Router (Kramer) + bridge Pi | Sitting on the vented acrylic top cover - outside the metal, bridge Pi's upstream is Wi-Fi | Decided |
-| U12 | Switch (Varnsen) | Included 1U shelf, or a printed 1U faceplate | Decided (mount TBD) |
+| U12 | Switch (Varnsen) | Included 0.5U shelf, or a printed 1U faceplate (1U shelf goes to the nodes) | Decided (mount TBD) |
 | U11 | Patch panel | Included 0.5U 12-port blank ladder panel | Phase 2 |
 | U10-9 | Pi 4 nodes (Frank, Morty, Newman) | TBD - printed or DeskPi Pi mount | Phase 2 |
-| U8 | Spare / cable management | Included 0.5U shelf or blank | Flexible |
-| U7-5 | 4x N100 (Jerry, Art, Elaine, George) | Stripped blades standing on end in a printed base | 3U decided, spacing TBD |
-| U4-3 | Spare - 5th node / more Pis (U3 overflow for power bricks if needed) | Included vented blanks | Reserved |
+| U8 | Spare / cable management | Blank | Flexible |
+| U7-5 | 4x N100 (Jerry, Art, Elaine, George) + 1 spare slot | Stripped blades standing on end in a printed 5-slot mount, screwed horizontally into the included 1U shelf (U5) | Mount printed |
+| U4-3 | Spare - more Pis (U3 overflow for power bricks if needed) | Included vented blanks | Reserved |
 | U2 | Existing power bricks, lying flat | Shelf | Phase 1 |
 | U1 | AC PDU - 1U, 4 rear + 2 front outlets, 2x USB-A, surge protected | Rack ears | Ordered |
 | Rear of U7-5 | Rear fans | Included fan fixing plates | Fan size TBD |
@@ -78,10 +78,10 @@ Nodes are GMKtec NucBox G3 (case 115 x 107 x 44.5mm). Bare board is 107 x 107 x 
 | Blades | Pitch | Air gap | |
 |---|---|---|---|
 | 6 | 1.45" | ~0.35" | Tight |
-| 5 | 1.74" | ~0.65" | Workable |
+| 5 | 1.74" | ~0.65" | Workable - chosen |
 | 4 | 2.17" | ~1.05" | Comfortable |
 
-Spacing is TBD. Plan is an adjustable base: a slotted rail (or row of closely spaced holes) with clamp-on blade holders, so nodes can slide along it to rebalance gaps or make room for a 5th without reprinting.
+Mount: 3D printed, 5 fixed slots along the included 1U shelf (U5), screwed horizontally into the shelf so the mount and shelf are one rigid unit. 4 slots used now, the 5th is room for a 5th node (replaces the earlier adjustable slotted-rail idea).
 
 Airflow notes:
 - Each gap is shared by one board's fan side and the next board's NVMe side - face all blades the same direction.
@@ -119,7 +119,8 @@ One ~180W (15A) 12V enclosed brick (e.g. Mean Well GST series) -> DC distributio
 - Never feed it anything but 12V - it passes input voltage straight through
 
 ## Still to source
-- [ ] Node blade base - slotted rail + clamp-on holders (3D print, PETG/ASA - not PLA)
+- [x] Node blade mount - 5 slots, screwed into the 1U shelf (3D printed)
+- [ ] Node blade mount design files into the repo - PR from whoever printed it
 - [ ] Switch faceplate (optional, 3D print)
 - [ ] Rear fans - check what size the fixing plate takes
 - [x] AC PDU - ordered 2026-09-27 (see Orders)
