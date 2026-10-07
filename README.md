@@ -18,6 +18,8 @@ Vandelay Industries is made up by:
   - to be added: work group of PIs that were peviously a standalone cluster -> low-powered low-storage energy efficent nodes
 - Cloudflare zero-trust to manage access to hosted apps
 
+Rack, power, home network and node hardware: [hardware/](hardware/README.md). Cluster setup: [cloud_setup/](cloud_setup/README.md).
+
 Images below show some of the hardware used to power the K8s cluster, the raspberry pi compute part
 <p align="center">
     <img src="images/cluster_collage_v1.jpg"/>

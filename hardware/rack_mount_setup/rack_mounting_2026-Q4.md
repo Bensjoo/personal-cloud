@@ -1,6 +1,32 @@
 # Rack mounting - 2026 Q4
 Moving Vandelay Industries from a desk pile into a 10" mini rack. Goals: neat, quiet, one power source instead of a brick per device, and room for the Pi node group to come back later.
 
+## As built - phase 1 (2026-10-05)
+<p align="center">
+    <img src="../images/rack_phase1_2.jpg" width="45%"/>
+    <img src="../images/rack_phase1.jpg" width="45%"/>
+</p>
+
+Differs from the [original layout plan](#layout---original-plan): the router went inside the rack instead of on the top cover, the blades moved up right under it, and the switch rides on the blade shelf. The power bricks fit at the bottom, with cables run down through the open middle.
+
+| Position | What | Mounting |
+|---|---|---|
+| Top, ~2U | Router (Kramer, UniFi Express 7) | Shelf |
+| Below router, ~3U | 4x N100 blades: Art, spare slot, George, Elaine, Jerry | 3D printed 5-slot mount on the included 1U shelf |
+| Behind the blades | Switch (D-Link DGS-105, 5 port) | Sits on the same 1U shelf |
+| Middle | Open - power cables run down to the bottom | Free for the Pi node group / cable management |
+| Bottom | Node power bricks | On top of the PDU |
+| U1 | AC PDU | Rack ears |
+
+Blade shelf before going in - blades, switch and patch cables on the 1U shelf:
+
+<p align="center">
+    <img src="../images/rack_blades_1.jpg" width="50%"/>
+</p>
+
+- Bridge Pi isn't in the rack: the wall Ethernet works again, so it's stored away as a fallback. That's also why the router can sit inside the metal frame - no Wi-Fi upstream to protect
+- [ ] Confirm exact U positions
+
 ## Rack: GeeekPi DeskPi RackMate T2 (12U)
 10.23"D x 10"W x 21"H. Aluminum frame, acrylic sides, open front/back, 10-32 threaded rails (no cage nuts).
 
@@ -27,8 +53,8 @@ Moving Vandelay Industries from a desk pile into a 10" mini rack. Goals: neat, q
 ## Orders
 | Date | Item | Status |
 |---|---|---|
-| 2026-09-27 | GeeekPi DeskPi RackMate T2 12U | Ordered |
-| 2026-09-27 | [10" 1U rack PDU, 6 outlets (4 rear + 2 front), 2x USB-A, 1020J surge, 14AWG 6ft](https://www.amazon.com/dp/B0G1M1ZWP4) | Ordered |
+| 2026-09-27 | GeeekPi DeskPi RackMate T2 12U | Received |
+| 2026-09-27 | [10" 1U rack PDU, 6 outlets (4 rear + 2 front), 2x USB-A, 1020J surge, 14AWG 6ft](https://www.amazon.com/dp/B0G1M1ZWP4) | Received |
 
 ## Phase 0.5 - tidy first, mount later
 Rack + AC PDU only. Cased nodes sit loose on a shelf, no printing or stripping yet. Ollama is moving off the cluster (to the media PC with a GPU), so node heat is low for now.
@@ -56,7 +82,9 @@ Move day - everything goes offline anyway (network moves too), so do a planned f
 - [ ] Rack everything, power up Art first, then the workers
 - [ ] Check `kubectl get nodes` and Longhorn volumes are healthy
 
-## Layout
+## Layout - original plan
+Superseded by [As built](#as-built---phase-1-2026-10-05) where they differ.
+
 | Position | What | Mounting | Status |
 |---|---|---|---|
 | Top | Router (Kramer) + bridge Pi | Sitting on the vented acrylic top cover - outside the metal, bridge Pi's upstream is Wi-Fi | Decided |
@@ -103,7 +131,7 @@ PDU: 4 rear + 2 front AC outlets, 2x USB-A (wattage unlisted), 1020J surge prote
 | 4x N100 (G3) | 12V 3A (36W) brick, 5.5 x 2.5mm barrel, center positive | Rear 1-4 |
 | Router (UniFi Express 7) | TBD - check label | Front 1 |
 | Switch (TP-Link) | TBD - check label. If 5V: USB-A -> 5.5mm barrel cable | USB-A, else splitter |
-| Bridge Pi | 5V 3A USB-C (TBD - check label) | Front 2 - not the PDU's USB-A (likely <3A, and it's the only internet link) |
+| Bridge Pi | 5V 3A USB-C (TBD - check label) | Not in use - stored (wall Ethernet works again). If it comes back: Front 2, not the PDU's USB-A (likely <3A, and it's the only internet link) |
 | Spare | | Splitter on a front outlet when needed (switch if not 5V, phase 2 Pis) |
 
 Extra outlets come from a plain 1-to-3 splitter cord. Never chain a surge-protected strip into this PDU.
