@@ -1,0 +1,16 @@
+# Grafana dashboards as code. The Grafana sidecar loads any ConfigMap labeled grafana_dashboard=1.
+# Edit in the Grafana UI if easier, then Export -> JSON and save over the file here.
+namespace: monitoring
+
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    grafana_dashboard: "1"
+
+configMapGenerator:
+  - name: dashboard-overview
+    files:
+      - overview.json
+  - name: dashboard-thermals-power
+    files:
+      - thermals-power.json

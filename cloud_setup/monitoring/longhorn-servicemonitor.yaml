@@ -1,0 +1,16 @@
+# Scrape Longhorn's manager metrics (volume robustness, node/disk status, storage usage).
+# Each longhorn-manager pod reports on its own node, so Prometheus scrapes every endpoint behind the service.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: longhorn
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - longhorn-system
+  selector:
+    matchLabels:
+      app: longhorn-manager
+  endpoints:
+    - port: manager
