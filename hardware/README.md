@@ -9,6 +9,7 @@ The physical side of Vandelay Industries: the rack, power, home network and the 
 | Doc | What's in it |
 |---|---|
 | [rack_mount_setup/rack_mounting_2026-Q4.md](rack_mount_setup/rack_mounting_2026-Q4.md) | Rack project: as-built layout, original plan, blade mount sizing, power plan, orders, to-dos |
+| [thermals_power/thermals_power_2026-Q4.md](thermals_power/thermals_power_2026-Q4.md) | Next project: temps + power monitoring, baseline, passive cooling and power trimming experiments |
 | [networking.md](networking.md) | Why the lab has its own network, and the bridge Pi NAT router guide (fallback, not in use) |
 | [legacy_work/hardware](../legacy_work/hardware/README.md) | Older Pi-era inventory and drive benchmarks (Pi USB SSDs vs the N100 NVMe) |
 

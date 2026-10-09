@@ -236,7 +236,48 @@ kubectl apply -f cloud_setup/networking_external/deployment.yaml
 
 
 ### Monitoring
-for now will wait to see what options I have and feel out what I actually need
+[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack): Prometheus (via the Prometheus Operator), Grafana, node-exporter (DaemonSet, one pod per node) and kube-state-metrics. Started for the [temps & power project](../hardware/thermals_power/thermals_power_2026-Q4.md).
+
+k3s specifics in [values.yaml](monitoring/values.yaml):
+- controller-manager, scheduler, proxy and etcd live inside the k3s binary, so their monitors are disabled
+- node-exporter's init container makes RAPL readable, for CPU package watts
+- Prometheus: 30s scrapes, 90d retention, 30Gi Longhorn volume
+
+```bash
+# needs a "grafana" item with a password in the vandelay 1Password vault
+bash cloud_setup/monitoring/create-secret.sh
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+bash cloud_setup/monitoring/install-upgrade.sh
+```
+
+Check:
+```bash
+# node-exporter on all 4 nodes (art too - it tolerates the control-plane taint)
+kubectl -n monitoring get pods -o wide
+
+# Prometheus targets page: everything should be UP
+kubectl -n monitoring port-forward svc/kube-prometheus-stack-prometheus 9090
+# -> http://localhost:9090/targets
+```
+Grafana at `http://grafana.vandelay`, login from 1Password. "Node Exporter / Nodes" is the starting dashboard.
+
+Own dashboards live as JSON in [monitoring/dashboards](monitoring/dashboards/), wrapped in ConfigMaps the Grafana sidecar picks up:
+```bash
+kubectl apply -k cloud_setup/monitoring/dashboards
+```
+- "Vandelay / Overview": high level - hottest CPU/NVMe, usage, k8s requests vs allocatable, Longhorn volume health
+- "Vandelay / Thermals & Power": temps, RAPL watts, throttling and load for all nodes side by side
+
+Longhorn metrics (volume robustness, node/disk status) need their own ServiceMonitor - the Longhorn chart doesn't create one by default:
+```bash
+kubectl apply -f cloud_setup/monitoring/longhorn-servicemonitor.yaml
+```
+
+UI edits to a provisioned dashboard don't stick - Export -> JSON, save over the file and re-apply.
+
+Upgrades: `helm upgrade` doesn't touch CRDs. On a major chart version bump, apply the new CRDs first (see the chart's upgrade notes), then bump `CHART_VERSION` in [install-upgrade.sh](monitoring/install-upgrade.sh).
 
 ## Maintenance / updates
 

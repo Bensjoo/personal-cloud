@@ -1,0 +1,69 @@
+# kube-prometheus-stack on k3s
+# Built for the temps & power project: hardware/thermals_power/thermals_power_2026-Q4.md
+
+# k3s runs these inside the k3s binary, not as pods - the default monitors would show as down forever
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeEtcd:
+  enabled: false
+
+# no alerting yet
+alertmanager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 30s # 2m (legacy) is too coarse to see a stress run ramp up
+    retention: 90d # baseline should span weeks, ideally a season change
+    retentionSize: 25GB # guard so the TSDB never fills the volume
+
+    # pick up ServiceMonitors / ScrapeConfigs from any namespace, not only ones labeled for this release
+    # (needed later for the Shelly plugs and the ESP32)
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+    resources:
+      requests:
+        memory: 1Gi
+      limits:
+        memory: 3Gi
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 30Gi
+
+prometheus-node-exporter:
+  # init container makes RAPL energy_uj readable for node-exporter's group on every pod start
+  # -> node_rapl_package_joules_total (CPU package watts)
+  permissionInitContainer:
+    fixes:
+      rapl: true
+
+grafana:
+  defaultDashboardsTimezone: browser
+  admin:
+    existingSecret: grafana-admin # cloud_setup/monitoring/create-secret.sh
+  persistence:
+    enabled: true
+    storageClassName: longhorn
+    size: 1Gi
+  # RWO volume: the old pod has to let go of it before the new one starts
+  deploymentStrategy:
+    type: Recreate
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.vandelay
